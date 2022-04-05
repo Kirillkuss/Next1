@@ -56,7 +56,4 @@ public class UserServiceTwo {
       //entityManager.createNativeQuery("delete from USERREST u where u.user_id = ?1").setParameter(1, idUser).executeUpdate(); //через SQL 
       //entityManager.createQuery("delete from User u where u.idUser = ?1").setParameter(1, idUser).executeUpdate();   //через JPQL
     }
-    
-    
-    
 }

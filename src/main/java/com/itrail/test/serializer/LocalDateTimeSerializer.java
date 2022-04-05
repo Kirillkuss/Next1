@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
  *
  * @author barysevich_k
  */
-
+//old
 public class LocalDateTimeSerializer extends JsonSerializer<LocalDateTime> {
     
     @Override

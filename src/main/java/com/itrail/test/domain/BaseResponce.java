@@ -7,12 +7,13 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 /**
  *
  * @author barysevich_k
+ * @param <T>
  */
-public class BaseResponce {
+public class BaseResponce<T> {
     private int code =999;
     private String message;
     @JsonInclude(Include.NON_NULL)
-    private Object data;
+    private T data;
 
     public BaseResponce() {
     }
@@ -38,11 +39,11 @@ public class BaseResponce {
         this.message = message;
     }
 
-    public Object getData() {
-        return data;
+    public <T> T getData() {
+        return (T)data;
     }
 
-    public void setData(Object data) {
+    public void setData(T data) {
         this.data = data;
     }
     

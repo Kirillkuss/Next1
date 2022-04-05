@@ -1,6 +1,5 @@
 package com.itrail.test.service;
 
-import com.itrail.test.domain.Animal;
 import com.itrail.test.domain.User;
 import java.math.BigDecimal;
 import java.util.Arrays;

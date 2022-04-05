@@ -1,12 +1,7 @@
 
 package com.itrail.test.service;
 
-
-
-
-
 import com.itrail.test.domain.Animal;
-import com.itrail.test.domain.User;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
@@ -15,7 +10,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.ejb.Stateless;
-
 /**
  *
  * @author barysevich_k
@@ -27,11 +21,11 @@ public class AnimalService {
     public int getNumber() {
         return number;
     }
-   List<Animal> us4 = new LinkedList<>(Arrays.asList(new Animal(1,"cat",new BigDecimal("100.23")),
-                                                     new Animal(5,"dog", new BigDecimal("50.21"),new User(134,"rrrr", "wewe", "rtr",new BigDecimal("3242.45"))),
-                                                     new Animal(20,"bird", new BigDecimal("150.25677")),
-                                                     new Animal(24,"turtle", new BigDecimal("200.4686")),
-                                                     new Animal(40,"snake", new BigDecimal("300.8789"))));
+   List<Animal> us4 = new LinkedList<>(Arrays.asList(new Animal(1,"cat",new BigDecimal("100.23"),2),
+                                                     new Animal(5,"dog", new BigDecimal("50.21"),1),
+                                                     new Animal(20,"bird", new BigDecimal("150.25677"),2),
+                                                     new Animal(24,"turtle", new BigDecimal("200.4686"),2),
+                                                     new Animal(40,"snake", new BigDecimal("300.8789"),3)));
    
      public List<Animal> getAnimal(){
            return us4;
@@ -44,7 +38,7 @@ public class AnimalService {
      
     public List<Animal> withoutOwner(){
         List<Animal> us1 = us4.stream()
-                              .filter(s->null == s.getOwner())
+                              //.filter(s->null == s.getOwner())
                               .collect(Collectors.toList());
         return us1;
     }

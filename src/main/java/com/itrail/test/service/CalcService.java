@@ -4,9 +4,12 @@ package com.itrail.test.service;
 import com.itrail.test.domain.BaseResponce;
 
 import com.itrai.test.exception.ItException;
+import com.itrail.test.domain.Animal;
+import com.itrail.test.domain.User;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 /**
  *
  * @author barysevich_k
@@ -14,7 +17,6 @@ import javax.ejb.Stateless;
 @Stateless
 public class CalcService {
     @EJB private AnimalService service;
-    
   
     public BaseResponce getMyCalc() throws ItException {
            int number = service.getNumber();
@@ -55,5 +57,16 @@ public class CalcService {
         }
         return new BaseResponce (0, "Success");
     }
-    
+    @PersistenceContext
+    private EntityManager em;
+    public BaseResponce getBuyAnimal(Integer idAnimal, Integer idUser) throws ItException{
+        Animal ani = em.find(Animal.class, idAnimal);
+        User us = em.find(User.class, idUser);
+        Integer a = ani.getCoat().compareTo(us.getWallet());
+        switch(a){
+            case -1 : throw new ItException(50," Not enough money to buy an animal "); 
+        }
+        return new BaseResponce (0, "Success");
+    }
+  
 }

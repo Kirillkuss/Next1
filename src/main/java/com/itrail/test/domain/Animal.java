@@ -6,7 +6,6 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,14 +22,14 @@ import javax.persistence.Table;
 public class Animal {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name  =  "ANIMAL_ID") private Integer    idAnimal;
-        @Column(name = "type_animal") private String     type;
-        @Column(name = "coat_animal") private BigDecimal coat;
+
         
+        @Column(name  =  "ANIMAL_ID")  private Integer    idAnimal;
+        @Column(name = "type_animal")  private String     type;
+        @Column(name = "coat_animal")  private BigDecimal coat;
+        @Column(name = "count_animal") private Integer    count;
         @OneToOne(cascade = CascadeType.ALL)
-        //@JoinColumn(name="USER_ID", nullable=false)
-        private User       owner;
-        
+        @JoinColumn(name = "USER_ID")  private User       owner;
         public Animal() {
         }
                   
@@ -38,21 +37,15 @@ public class Animal {
  * @param idAnimal
  * @param type
  * @param coat
- * @param user
+ * @param count
  */
-        public Animal(Integer idAnimal,String type, BigDecimal coat,User user){
+        public Animal(Integer idAnimal,String type, BigDecimal coat,Integer count){
             this.idAnimal = idAnimal;
             this.type = type;
             this.coat = coat;
-            this.owner = user;
+            this.count = count;
         }
         
-        public Animal(Integer idAnimal,String type, BigDecimal coat){
-            this.idAnimal = idAnimal;
-            this.type = type;
-            this.coat = coat;
-        }
-
     public Integer getIdAnimal() {
         return idAnimal;
     }
@@ -77,14 +70,14 @@ public class Animal {
         this.coat = coat;
     }
 
-    public User getOwner() {
-        return owner;
+    public Integer getCount() {
+        return count;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setCount(Integer count) {
+        this.count = count;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 3;
@@ -121,7 +114,7 @@ public class Animal {
 
     @Override
     public String toString() {
-        return "Animal{" + "idAnimal=" + idAnimal + ", type=" + type + ", coat=" + coat + ", owner=" + owner + '}';
+        return "Animal{" + "idAnimal=" + idAnimal + ", type=" + type + ", coat=" + coat +  '}';
     }
     
     

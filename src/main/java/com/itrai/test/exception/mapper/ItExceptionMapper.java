@@ -19,7 +19,7 @@ public class ItExceptionMapper implements ExceptionMapper<ItException>{
         BaseResponce bs = new BaseResponce();
         bs.setCode(e.getPri() == 0 ? 999 : e.getPri());
         bs.setMessage(null == e.getMessage() ? "System malfunction" : e.getMessage());
-        return Response.ok().entity(bs).build();
+        return Response.status( e.getPri() == 0 ? 200 : e.getPri() ).entity(bs).build();
     }
 
 
