@@ -1,13 +1,9 @@
 
 package com.itrail.test.domain;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
 /**
- *
  * @author barysevich_k
- * @param <T>
  */
 public class BaseResponce<T> {
     private int code =999;
@@ -46,13 +42,10 @@ public class BaseResponce<T> {
     public void setData(T data) {
         this.data = data;
     }
-    
 
     @Override
     public String toString() {
         return "BaseResponce{" + "code=" + code + ", message=" + message + '}';
     }
-    
-    
-    
+   
 }

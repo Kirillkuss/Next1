@@ -5,19 +5,14 @@ import com.itrail.test.domain.BaseResponce;
 import com.itrail.test.rest.AnimalResourceTwo;
 import com.itrail.test.service.AnimalServiceTwo;
 import javax.ejb.EJB;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
 /**
  *
  * @author barysevich_k
  */
 
 @Path("animalEM")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
+
 public class AnimalTwoAPI implements AnimalResourceTwo{
     
     @EJB private AnimalServiceTwo service;

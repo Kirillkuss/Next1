@@ -1,29 +1,21 @@
 
 package com.itrail.test.rest.impl;
+
 import com.itrail.test.domain.BaseResponce;
 import com.itrail.test.domain.User;
 import com.itrail.test.rest.UserResourceTwo;
-import com.itrail.test.service.BuyService;
 import com.itrail.test.service.UserServiceTwo;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
 /**
  *
  * @author barysevich_k
  */
 @Path("entitymanager")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
 public class UserTwoAPI implements UserResourceTwo {
     
     @EJB private UserServiceTwo service;
-
-
     @Override
     public BaseResponce getAllUsers() {
         BaseResponce bs = new BaseResponce(200,"success");
@@ -54,8 +46,6 @@ public class UserTwoAPI implements UserResourceTwo {
         service.deleteUser(idUser);
         return bs;
     }
-    
-    
 
     @Override
     public BaseResponce updateUser(Integer idUser, String name) {

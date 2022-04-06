@@ -26,7 +26,7 @@ public class BuyService {
     @PersistenceContext
     private EntityManager em;
     
-    public List <Order> getOrders(){
+    public List <Order> getAllOrders(){
       LocalDate localDate = LocalDate.now();
       return  em.createQuery("SELECT e FROM Order e WHERE e.time BETWEEN :daystart AND :dayend")
                 .setParameter("daystart",localDate.atStartOfDay())
@@ -35,10 +35,17 @@ public class BuyService {
     }
     
     public BaseResponce<OrderRs> getOrders( OrderRq rq){
-        return null;
+        BaseResponce<OrderRs> bs = new BaseResponce();
+        em.createQuery("select o FROM Order o where :uid is null or o.userID = :uid"
+                                            + " AND :tiOrder is null or o.time = :tiOrder"
+                                            + " AND :oid is null or o.idOrder = :oid")
+                .setParameter("uid", rq.getIdUser())
+                .setParameter("tiOrder", rq.getTime())
+                .setParameter("oid", rq.getIdOrderRq()).getResultList();
+        System.out.println("GetOrders>>>> IdOrder: " + rq.getIdOrderRq()+ " IdUser: " + rq.getIdUser()+ " DateTime: " + rq.getTime()); 
+        return bs;
     }
-    
-    
+
       public void createOrder(Order...or){
           createOrder(Arrays.asList(or));
       }
@@ -52,7 +59,6 @@ public class BuyService {
           em.merge(or);
       }
       
-    
     public void getBuyAnimal(Integer idAnimal, Integer idUser) throws ItException{ 
         
         Animal ani = em.find(Animal.class, idAnimal);

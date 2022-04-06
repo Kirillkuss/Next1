@@ -2,7 +2,8 @@
 package com.itrail.test.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.itrail.test.serializer.LocalDateTimeSerializer;
+import com.itrail.test.domain.utils.LocalDateTimeSerializer;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -25,7 +26,7 @@ public class Order {
     private Integer            userID;
     private Integer            animalID;
     private BigDecimal         sum;
-    @JsonSerialize( using = LocalDateTimeSerializer.class )
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime      time;
 
     public Order() {
@@ -78,8 +79,6 @@ public class Order {
     public void setTime(LocalDateTime time) {
         this.time = time;
     }
-
-   
 
     @Override
     public int hashCode() {

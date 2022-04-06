@@ -16,8 +16,8 @@ public class ExceptionMapperPOST implements ExceptionMapper<NullPointerException
     @Override
     public Response toResponse(NullPointerException e) {
         BaseResponce bs = new BaseResponce();
-        bs.setCode(601);
-        bs.setMessage(null == e.getMessage() ? "no user with this idUser" : e.getMessage());
+        bs.setCode(0);
+        bs.setMessage(null == e.getMessage() ? "Not Data found" : e.getMessage());
         return Response.ok().entity(bs).build();
     }
     

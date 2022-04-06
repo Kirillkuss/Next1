@@ -22,8 +22,6 @@ import javax.persistence.Table;
 public class Animal {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-        
         @Column(name  =  "ANIMAL_ID")  private Integer    idAnimal;
         @Column(name = "type_animal")  private String     type;
         @Column(name = "coat_animal")  private BigDecimal coat;
@@ -31,8 +29,7 @@ public class Animal {
         @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(name = "USER_ID")  private User       owner;
         public Animal() {
-        }
-                  
+        }             
 /**
  * @param idAnimal
  * @param type

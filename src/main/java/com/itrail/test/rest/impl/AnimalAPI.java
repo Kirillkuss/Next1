@@ -6,24 +6,18 @@ package com.itrail.test.rest.impl;
 import com.itrai.test.exception.ItException;
 import com.itrail.test.domain.Animal;
 import com.itrail.test.domain.BaseResponce;
-
 import com.itrail.test.rest.AnimalResource;
 import com.itrail.test.service.AnimalService;
 import com.itrail.test.service.CalcService;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-
 /**
  *
  * @author barysevich_k
  */
 @Path("animal")
-@Consumes({"application/json"})
-@Produces({"application/json"})
 public class AnimalAPI implements AnimalResource{
     
     @EJB private AnimalService service2;
