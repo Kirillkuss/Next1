@@ -6,8 +6,10 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  * @author barysevich_k
  */
 public class BaseResponce<T> {
-    private int code =999;
-    private String message;
+    private int code = 999;
+    private String message = "System mallfunction";
+    
+    
     @JsonInclude(Include.NON_NULL)
     private T data;
 
@@ -18,6 +20,11 @@ public class BaseResponce<T> {
         this.code = code;
         this.message = message;
     }
+    
+    public static BaseResponce success() {
+        return new BaseResponce( 0, "success");
+    }
+    
 
     public int getCode() {
         return code;
@@ -45,7 +52,8 @@ public class BaseResponce<T> {
 
     @Override
     public String toString() {
-        return "BaseResponce{" + "code=" + code + ", message=" + message + '}';
+        return "BaseResponce{" + "code=" + code + ", message=" + message + ", data=" + data + '}';
     }
-   
+
+
 }

@@ -6,7 +6,6 @@ import com.itrail.test.domain.Animal;
 import com.itrail.test.domain.BaseResponce;
 import com.itrail.test.domain.Order;
 import com.itrail.test.domain.OrderRq;
-import com.itrail.test.domain.OrderRs;
 import com.itrail.test.domain.User;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -26,7 +25,7 @@ public class BuyService {
     @PersistenceContext
     private EntityManager em;
     
-    public List <Order> getAllOrders(){
+    public List <Order> getAllOrders(){      
       LocalDate localDate = LocalDate.now();
       return  em.createQuery("SELECT e FROM Order e WHERE e.time BETWEEN :daystart AND :dayend")
                 .setParameter("daystart",localDate.atStartOfDay())
@@ -34,18 +33,39 @@ public class BuyService {
                 .getResultList();
     }
     
-    public BaseResponce<OrderRs> getOrders( OrderRq rq){
-        BaseResponce<OrderRs> bs = new BaseResponce();
-        em.createQuery("select o FROM Order o where :uid is null or o.userID = :uid"
-                                            + " AND :tiOrder is null or o.time = :tiOrder"
-                                            + " AND :oid is null or o.idOrder = :oid")
-                .setParameter("uid", rq.getIdUser())
-                .setParameter("tiOrder", rq.getTime())
-                .setParameter("oid", rq.getIdOrderRq()).getResultList();
-        System.out.println("GetOrders>>>> IdOrder: " + rq.getIdOrderRq()+ " IdUser: " + rq.getIdUser()+ " DateTime: " + rq.getTime()); 
-        return bs;
+    public BaseResponce<List<Order>> getOrders( OrderRq rq){
+        BaseResponce<List<Order>> bs = new BaseResponce<>(200,"success");
+        try{
+            List<Order> order  = em.createQuery("select o FROM Order o where :uid is null or o.userID = :uid"
+                                                + " AND :tiOrder is null or o.time = :tiOrder"
+                                                + " AND :oid is null or o.idOrder = :oid")
+                                   .setParameter("uid", rq.getIdUser())
+                                   .setParameter("tiOrder", rq.getTime())
+                                   .setParameter("oid", rq.getIdOrderRq()).getResultList(); 
+            System.out.println("ORDER>>>" + order);
+            bs.setData( order );
+            return bs;
+        }catch(Exception ex){
+            ex.printStackTrace(System.err);
+            bs.setCode(999);
+            bs.setMessage(null == ex.getMessage() ?  "System mullfunction " : ex.getMessage());
+            return bs;
+        }  
     }
-
+    
+    public BaseResponce<Order> getOrder( OrderRq rq) throws ItException{
+        //return  BaseResponce.success().setData(getOrders(rq));
+        BaseResponce r = new BaseResponce<>(0,"success"); 
+            BaseResponce<List<Order>> ress = getOrders(rq);
+            if(ress.getCode() == 0 && null!= ress.getData() && !((List<Order>)ress.getData()).isEmpty() ){
+                r.setData( ((List<Order>)ress.getData()).get(0)  );
+            } else {
+                r.setCode(ress.getCode());
+                r.setMessage(ress.getMessage());
+            } 
+         return r;
+    }
+    
       public void createOrder(Order...or){
           createOrder(Arrays.asList(or));
       }

@@ -19,7 +19,6 @@ public class UserService {
                                                     new User(5,"Andrei","aaaaa", "+37533783434",new BigDecimal("500.23")),
                                                     new User(10, "Misha", "mmmm", "+3751224892",new BigDecimal("800.34"))));
     
-    
     public List<User> getUsers(){
         return us2;
     }
@@ -36,7 +35,6 @@ public class UserService {
                   .orElse(null);
     }
    
-    
     public boolean delUser(Integer idUser){
        return us2.removeIf(s-> Objects.equals(s.getIdUser(), idUser));
     }
@@ -49,8 +47,4 @@ public class UserService {
         
         return us1.isPresent();
     }
-
-    
- 
-    
 }

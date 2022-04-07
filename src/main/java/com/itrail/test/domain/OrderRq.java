@@ -21,11 +21,9 @@ public class OrderRq {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idOrderRq;
     private Integer idUser;
-   // @JsonSerialize( using = LocalDateTimeSerializer.class )
     @JsonDeserialize(using = LocalDateTimeDeserializer.class) 
     private LocalDateTime time;
 
- 
     public OrderRq() {
     }
 

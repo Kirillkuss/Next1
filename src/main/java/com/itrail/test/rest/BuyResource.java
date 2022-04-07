@@ -3,6 +3,7 @@ package com.itrail.test.rest;
 
 import com.itrai.test.exception.ItException;
 import com.itrail.test.domain.BaseResponce;
+import com.itrail.test.domain.Order;
 import com.itrail.test.domain.OrderRq;
 import com.itrail.test.domain.OrderRs;
 import javax.ws.rs.Consumes;
@@ -28,7 +29,12 @@ public interface BuyResource {
     public BaseResponce getBuyAnimal(@PathParam("idAnimal") Integer idAnimal, @PathParam("idUser") Integer idUser) throws ItException;
     
     @POST
+    @Path("/order")
+    public Order getOrder(OrderRq req) throws ItException;
+    
+    @POST
     @Path("/orders")
-    public OrderRs getOrder(OrderRq req) throws ItException;
+    public OrderRs getOrders(OrderRq req) throws ItException;
+    
     
 }

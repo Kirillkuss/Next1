@@ -3,6 +3,7 @@ package com.itrail.test.rest.impl;
 
 import com.itrai.test.exception.ItException;
 import com.itrail.test.domain.BaseResponce;
+import com.itrail.test.domain.Order;
 import com.itrail.test.domain.OrderRq;
 import com.itrail.test.domain.OrderRs;
 import com.itrail.test.rest.BuyResource;
@@ -35,8 +36,14 @@ public class BuyAPI implements BuyResource {
     }
     
     @Override
-    public OrderRs getOrder(OrderRq req) throws ItException {
-        BaseResponce<OrderRs> bs = ser.getOrders(req);
-        return bs.getData();
+    public Order getOrder(OrderRq req) throws ItException {
+        BaseResponce<Order> bs = ser.getOrder(req);  
+        if(bs.getCode() != 0) throw new ItException(bs.getCode(), bs.getMessage()); 
+        return ser.getOrder(req).getData();
     }
+
+    @Override
+    public OrderRs getOrders(OrderRq req) throws ItException {
+        return new OrderRs(ser.getOrders(req).getData());
+    }  
 }
