@@ -3,9 +3,9 @@ package com.itrail.test.service;
 
 import com.itrai.test.exception.ItException;
 import com.itrail.test.domain.Animal;
-import com.itrail.test.domain.BaseResponce;
+import com.itrail.test.domain.BaseResponse;
 import com.itrail.test.domain.Order;
-import com.itrail.test.domain.OrderRq;
+import com.itrail.test.domain.OrderRequest;
 import com.itrail.test.domain.User;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,13 +17,23 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 /**
+ * Сервисный класс для покупи питомцев и формирования заказов 
  *
+ * @version 1.0
  * @author barysevich_k
  */
 @Stateless
 public class BuyService {
     @PersistenceContext
-    private EntityManager em;
+    private EntityManager em; 
+    
+    /**
+     * Этот метод для получения списка всех заказов за сегодняшний день в промежутке врмени с 00:00 по настоящее время.
+     * @return <code> List </code>
+     * список все заказов
+     * @see #getOrdrs()
+     * @see #em
+     */
     
     public List <Order> getAllOrders(){      
       LocalDate localDate = LocalDate.now();
@@ -32,53 +42,101 @@ public class BuyService {
                 .setParameter("dayend", LocalDateTime.now())
                 .getResultList();
     }
+    /**
+     * Этот метод для получения списка заказов
+     * @param rq - входные параметры для поиска заказов 
+     * @return<code> Order </code>
+     * список заказов
+     * @see #getOrdrs() 
+     * @see  com.itrail.test.domain.BaseResponse#BaseResponse()
+     * @see com.itrail.test.domain.Order
+     * @see com.itrail.test.domain.OrderRequest#OrderRequest() 
+     * 
+     */
     
-    public BaseResponce<List<Order>> getOrders( OrderRq rq){
-        BaseResponce<List<Order>> bs = new BaseResponce<>(200,"success");
+    public BaseResponse<List<Order>> getOrders(OrderRequest rq){
+        BaseResponse<List<Order>> bs = new BaseResponse<>(200,"success");
         try{
-            List<Order> order  = em.createQuery("select o FROM Order o where :uid is null or o.userID = :uid"
-                                                + " AND :tiOrder is null or o.time = :tiOrder"
-                                                + " AND :oid is null or o.idOrder = :oid")
-                                   .setParameter("uid", rq.getIdUser())
-                                   .setParameter("tiOrder", rq.getTime())
-                                   .setParameter("oid", rq.getIdOrderRq()).getResultList(); 
-            System.out.println("ORDER>>>" + order);
-            bs.setData( order );
+            bs.setData(getOrdrs());
             return bs;
         }catch(Exception ex){
             ex.printStackTrace(System.err);
-            bs.setCode(999);
-            bs.setMessage(null == ex.getMessage() ?  "System mullfunction " : ex.getMessage());
-            return bs;
+            return BaseResponse.error(910, ex);
         }  
     }
     
-    public BaseResponce<Order> getOrder( OrderRq rq) throws ItException{
-        //return  BaseResponce.success().setData(getOrders(rq));
-        BaseResponce r = new BaseResponce<>(0,"success"); 
-            BaseResponce<List<Order>> ress = getOrders(rq);
-            if(ress.getCode() == 0 && null!= ress.getData() && !((List<Order>)ress.getData()).isEmpty() ){
-                r.setData( ((List<Order>)ress.getData()).get(0)  );
-            } else {
-                r.setCode(ress.getCode());
-                r.setMessage(ress.getMessage());
-            } 
-         return r;
+    /**
+     * Этот метод для получения 1-го заказа
+     * @param rq - входные параметры для поиска заказа
+     * @return <code>  getOrdrs()  </code>
+     * 1-н заказ
+     * @see #getOrdrs() 
+     * @see  com.itrail.test.domain.BaseResponse#error(int, java.lang.Throwable) 
+     * @see com.itrail.test.domain.Order
+     * @see com.itrail.test.domain.OrderRequest
+     */
+    public BaseResponse<Order> getOrder(OrderRequest rq){
+        BaseResponse r = new BaseResponse<>(0,"success"); 
+        try{
+            Order order = getOrdrs().stream().findFirst().orElse(null);
+            r.setData(order);
+            return r; 
+        } catch(Exception ex){    
+            ex.printStackTrace(System.err);
+            return BaseResponse.error(905, ex);   
+        }
     }
-    
-      public void createOrder(Order...or){
+     /**
+      * Запрос на получение списка  по 3-м параметрам:
+      * 1. ИД заказа
+      * 2. ИД клиента
+      * 3. Время заказа
+      * @return <code> List <Order> </code>
+      * список заказов
+      * @see #em
+      * 
+      */
+    private List<Order> getOrdrs(){
+        OrderRequest rq = new OrderRequest();
+        return em.createQuery("select o FROM Order o where :userid is null or o.userID = :userid"
+                                                + " AND :timeOrder is null or o.time = :timeOrder"
+                                                + " AND :olderid is null or o.idOrder = :olderid")
+                                   .setParameter("userid", rq.getIdUser())
+                                   .setParameter("timeOrder", rq.getTime())
+                                   .setParameter("olderid", rq.getIdOrderRq()).getResultList(); 
+    }
+    /**
+     *Формирование неограниченого количество заказов
+     * @param or - неограниченное количество заказов 
+     */
+    public void createOrder(Order...or){
           createOrder(Arrays.asList(or));
       }
       
-      @Transactional
+    /**
+     *Формировавние списка заказов
+     * @param or - список заказов
+     */
+    @Transactional
       public void createOrder(List<Order> or){
           or.stream().forEach(s->em.merge(s));
       }
       
-      public void createOrder(Order or){
+    /**
+     * Формирование 1-го заказа
+     * @param or - заказ
+     */
+    public void createOrder(Order or){
           em.merge(or);
       }
       
+      /**
+       * Метод для покупки клиентом питомца 
+       * @param idAnimal - питомец 
+       * @param idUser - клиент 
+       * @throws ItException - 50 - недостаточно денег у покупателя, 51 - нет питомцев в магазине
+       * @see #BuyService()
+       */
     public void getBuyAnimal(Integer idAnimal, Integer idUser) throws ItException{ 
         
         Animal ani = em.find(Animal.class, idAnimal);
@@ -98,5 +156,6 @@ public class BuyService {
         orders.stream().forEach(s->em.merge(s));
         em.merge(us);   
     }
+
 }
 

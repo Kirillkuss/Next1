@@ -30,12 +30,7 @@ public class Animal {
         @JoinColumn(name = "USER_ID")  private User       owner;
         public Animal() {
         }             
-/**
- * @param idAnimal
- * @param type
- * @param coat
- * @param count
- */
+
         public Animal(Integer idAnimal,String type, BigDecimal coat,Integer count){
             this.idAnimal = idAnimal;
             this.type = type;

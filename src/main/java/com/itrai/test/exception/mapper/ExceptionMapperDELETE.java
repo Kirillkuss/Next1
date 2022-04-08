@@ -1,7 +1,7 @@
 
 package com.itrai.test.exception.mapper;
 
-import com.itrail.test.domain.BaseResponce;
+import com.itrail.test.domain.BaseResponse;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -15,7 +15,7 @@ public class ExceptionMapperDELETE implements ExceptionMapper<IllegalArgumentExc
 
     @Override
     public Response toResponse(IllegalArgumentException e) {
-        BaseResponce bs = new BaseResponce();
+        BaseResponse bs = new BaseResponse();
         bs.setCode(600);
         bs.setMessage(null == e.getMessage() ? "System malfunction" : e.getMessage());
         return Response.ok().entity(bs).build();

@@ -2,10 +2,10 @@
 package com.itrail.test.rest;
 
 import com.itrai.test.exception.ItException;
-import com.itrail.test.domain.BaseResponce;
+import com.itrail.test.domain.BaseResponse;
 import com.itrail.test.domain.Order;
-import com.itrail.test.domain.OrderRq;
-import com.itrail.test.domain.OrderRs;
+import com.itrail.test.domain.OrderRequest;
+import com.itrail.test.domain.OrderResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -22,19 +22,19 @@ import javax.ws.rs.core.MediaType;
 public interface BuyResource {
     
     @GET
-    public BaseResponce getListOrder();
+    public BaseResponse getListOrder();
 
     @POST
     @Path("/{idAnimal}/{idUser}")
-    public BaseResponce getBuyAnimal(@PathParam("idAnimal") Integer idAnimal, @PathParam("idUser") Integer idUser) throws ItException;
+    public BaseResponse getBuyAnimal(@PathParam("idAnimal") Integer idAnimal, @PathParam("idUser") Integer idUser) throws ItException;
     
     @POST
     @Path("/order")
-    public Order getOrder(OrderRq req) throws ItException;
+    public Order getOrder(OrderRequest req) throws ItException;
     
     @POST
     @Path("/orders")
-    public OrderRs getOrders(OrderRq req) throws ItException;
+    public OrderResponse getOrders(OrderRequest req) throws ItException;
     
     
 }

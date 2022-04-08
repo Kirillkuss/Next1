@@ -5,7 +5,7 @@ package com.itrail.test.rest.impl;
 
 import com.itrai.test.exception.ItException;
 import com.itrail.test.domain.Animal;
-import com.itrail.test.domain.BaseResponce;
+import com.itrail.test.domain.BaseResponse;
 import com.itrail.test.rest.AnimalResource;
 import com.itrail.test.service.AnimalService;
 import com.itrail.test.service.CalcService;
@@ -24,28 +24,28 @@ public class AnimalAPI implements AnimalResource{
     @EJB private CalcService service;
    
     @Override
-    public BaseResponce getAnimal() throws ItException { 
-        BaseResponce bs = new BaseResponce(200,"success");
+    public BaseResponse getAnimal() throws ItException { 
+        BaseResponse bs = new BaseResponse(200,"success");
         //try{
                 List<Animal> res = service2.getAnimal();
                 bs.setData(res);
                 service.getMyAnimal();
 //        } catch(ItException ex){
-//                return new BaseResponce( ex.getPri(), ex.getMessage() );
+//                return new BaseResponse( ex.getPri(), ex.getMessage() );
 //        }
         return bs;
     }
 
     @Override
-    public BaseResponce getAnimalID(Integer idAnimal) throws ItException {
-        BaseResponce bs = new BaseResponce(200, "success");
+    public BaseResponse getAnimalID(Integer idAnimal) throws ItException {
+        BaseResponse bs = new BaseResponse(200, "success");
             bs.setData(service2.getAnimalId(idAnimal));
        return bs;
         
     }
     @Override
-    public BaseResponce sumCoatAni() throws ItException{ 
-        BaseResponce bs = new BaseResponce(200,"success");
+    public BaseResponse sumCoatAni() throws ItException{ 
+        BaseResponse bs = new BaseResponse(200,"success");
             BigDecimal res = service2.sumCoat();   
             bs.setData(res);
             service.getAnimalCoat();
@@ -53,8 +53,8 @@ public class AnimalAPI implements AnimalResource{
     } 
 
     @Override
-    public BaseResponce withoutOwnerList() throws ItException{
-        BaseResponce bs = new BaseResponce(200, "success");
+    public BaseResponse withoutOwnerList() throws ItException{
+        BaseResponse bs = new BaseResponse(200, "success");
             List<Animal> res = service2.withoutOwner();
             bs.setData(res);
             service.getWithoutOwner();
@@ -62,8 +62,8 @@ public class AnimalAPI implements AnimalResource{
     }
     
     @Override
-     public BaseResponce getMyCalc() throws ItException{
-         BaseResponce bs = new BaseResponce(200, "success");
+     public BaseResponse getMyCalc() throws ItException{
+         BaseResponse bs = new BaseResponse(200, "success");
              int rez = service2.getNumber();
              bs.setData(rez);
              service.getMyCalc();
@@ -71,13 +71,13 @@ public class AnimalAPI implements AnimalResource{
      }
      
     @Override
-    public BaseResponce modifyNumber(int number) {
-        BaseResponce bs = new BaseResponce(200,"success");
+    public BaseResponse modifyNumber(int number) {
+        BaseResponse bs = new BaseResponse(200,"success");
         try{   
             int rez = service2.modifyNumber(number);
             bs.setData(rez);
         } catch (Exception ex){
-            return new BaseResponce(400,"not found");
+            return new BaseResponse(400,"not found");
         }
        return bs;
     }

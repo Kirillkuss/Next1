@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 /**
  * @author barysevich_k
  */
-public class BaseResponce<T> {
+public class BaseResponse<T> {
     private int code = 999;
     private String message = "System mallfunction";
     
@@ -13,18 +13,21 @@ public class BaseResponce<T> {
     @JsonInclude(Include.NON_NULL)
     private T data;
 
-    public BaseResponce() {
+    public BaseResponse() {
     }
 
-    public BaseResponce(int code,String message) {
+    public BaseResponse(int code,String message) {
         this.code = code;
         this.message = message;
     }
     
-    public static BaseResponce success() {
-        return new BaseResponce( 0, "success");
+    public static BaseResponse success() {
+        return new BaseResponse( 0, "success");
     }
     
+    public static BaseResponse error( int code, Throwable e ) {
+        return new BaseResponse( 0, null == e.getMessage() ?  "System mullfunction " : e.getMessage());
+    }
 
     public int getCode() {
         return code;

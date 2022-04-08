@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "ORDERRQ")
-public class OrderRq {
+public class OrderRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idOrderRq;
@@ -24,10 +24,10 @@ public class OrderRq {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class) 
     private LocalDateTime time;
 
-    public OrderRq() {
+    public OrderRequest() {
     }
 
-    public OrderRq(Integer idOrderRq, Integer idUser, LocalDateTime time) {
+    public OrderRequest(Integer idOrderRq, Integer idUser, LocalDateTime time) {
         this.idOrderRq = idOrderRq;
         this.idUser = idUser;
         this.time = time;
@@ -77,7 +77,7 @@ public class OrderRq {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final OrderRq other = (OrderRq) obj;
+        final OrderRequest other = (OrderRequest) obj;
         if (!Objects.equals(this.idOrderRq, other.idOrderRq)) {
             return false;
         }

@@ -5,13 +5,13 @@ import java.util.List;
 /**
  * @author barysevich_k
  */
-public class OrderRs {
+public class OrderResponse {
     private List<Order> orders;
 
-    public OrderRs() {
+    public OrderResponse() {
     }
     
-    public OrderRs(List<Order> orders) {
+    public OrderResponse(List<Order> orders) {
         this.orders = orders;
     }
 
