@@ -2,7 +2,6 @@
 package com.itrail.test.service;
 
 import com.itrail.test.domain.Animal;
-import com.itrail.test.domain.User;
 import java.util.Arrays;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -50,6 +49,5 @@ public class AnimalServiceTwo {
     
     public List<Animal> withoutOwner(){
         return entitymanager.createQuery("SELECT e FROM Animal e WHERE e.owner = null").getResultList();
-        
     }     
 }

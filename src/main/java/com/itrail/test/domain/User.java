@@ -1,6 +1,5 @@
 package com.itrail.test.domain;
 
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
@@ -13,17 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-
-
-
-
 /**
  *
  * @author barysevich_k
@@ -33,7 +26,6 @@ import javax.validation.constraints.Size;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    
     @Column(name = "USER_ID")                  private Integer      idUser;
     @NotEmpty(message = "Name User not be Empty")
     @Column(name = "name_user")                private String       name;
@@ -43,8 +35,7 @@ public class User {
     @Size (min =9, max = 13)
     @Column(name = "phone_user")               private String       phone;
     @Column(name = "wallet_user", length = 12) private BigDecimal   wallet;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER )
     @JoinTable(name = "USER_ANIMAL", joinColumns = @JoinColumn(name = "USER_ID"),
     inverseJoinColumns = @JoinColumn(name = "ANIMAL_ID"))
                                                private List<Animal> animal;
@@ -55,17 +46,17 @@ public class User {
     
     public User(Integer idUser, @NotEmpty String name, String login, String phone, BigDecimal wallet){
         this.idUser = idUser;
-        this.name = name;
-        this.login = login;
-        this.phone = phone;
+        this.name   = name;
+        this.login  = login;
+        this.phone  = phone;
         this.wallet = wallet;
     }
 
     public User(Integer idUser, String name, String login, String phone, BigDecimal wallet, List<Animal> animal) {
         this.idUser = idUser;
-        this.name = name;
-        this.login = login;
-        this.phone = phone;
+        this.name   = name;
+        this.login  = login;
+        this.phone  = phone;
         this.wallet = wallet;
         this.animal = animal;
     }
