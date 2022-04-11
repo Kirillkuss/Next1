@@ -1,8 +1,9 @@
-
 package com.itrail.test.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.itrail.test.domain.utils.LocalDateTimeSerializer;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -18,123 +19,153 @@ import javax.persistence.Table;
  *
  * @author barysevich_k
  */
+@ApiModel(description = "Информация о заказе")
 @Entity
 @Table(name = "ORDEREST")
 public class Order {
+
+    @ApiModelProperty(value = "Ид заказa", name = "IdOrder", dataType = "Integer", example = "1", required = true)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer            idOrder; //not null
-    private Integer            userID;
-    private Integer            animalID;
-    private BigDecimal         sum;
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    private LocalDateTime      time;
+    private Integer idOrder; //not null
     
+    @ApiModelProperty(value = "Ид покупателя", name = "UserID", dataType = "Integer", required = true)
+    private Integer userID;
+    
+    @ApiModelProperty(value = "Ид питомца", name = "AnimalID", dataType = "Integer", required = true)
+    private Integer animalID;
+    
+    @ApiModelProperty(value = "Стоипость покупки", name = "Sum", dataType = "String", required = true)
+    private BigDecimal sum;
+    
+    @ApiModelProperty(value = "Время покупки", name = "Date and Time", example = "1", required = true)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    private LocalDateTime time;
 
     public Order() {
     }
-/**
- * Order constructor
- * @param idOrder - ИД заказа
- * @param userID - ИД покупателя
- * @param animalID - ИД питомца
- * @param sum - стоимость покупки
- * @param time - время и дата покупки
- */
+
+    /**
+     * Order constructor
+     *
+     * @param idOrder - ИД заказа
+     * @param userID - ИД покупателя
+     * @param animalID - ИД питомца
+     * @param sum - стоимость покупки
+     * @param time - время и дата покупки
+     */
     public Order(Integer idOrder, Integer userID, Integer animalID, BigDecimal sum, LocalDateTime time) {
-        this.idOrder  = idOrder;
-        this.userID   = userID;
+        this.idOrder = idOrder;
+        this.userID = userID;
         this.animalID = animalID;
-        this.sum      = sum;
-        this.time     = time;
+        this.sum = sum;
+        this.time = time;
     }
+
     /**
      * Gets the idOrder code
-     * @return <code> Integer </code>
-     * specifying the idOrder code
+     *
+     * @return <code> Integer </code> specifying the idOrder code
      */
 
     public Integer getIdOrder() {
         return idOrder;
     }
+
     /**
      * Sets the idOrder code
-     * @param idOrder the idOrder code 
+     *
+     * @param idOrder the idOrder code
      */
 
     public void setIdOrder(Integer idOrder) {
         this.idOrder = idOrder;
     }
+
     /**
      * Gets the userID code
-     * @return <code> Integer </code>
-     * specifying the userID code
+     *
+     * @return <code> Integer </code> specifying the userID code
      */
 
     public Integer getUserID() {
         return userID;
     }
+
     /**
      * Sets the userID code
+     *
      * @param userID the userId code
      */
 
     public void setUserID(Integer userID) {
         this.userID = userID;
     }
+
     /**
      * Gets the animalID
-     * @return <code> Integer </code>
-     * srecifying the animalID code
+     *
+     * @return <code> Integer </code> srecifying the animalID code
      */
 
     public Integer getAnimalID() {
         return animalID;
     }
+
     /**
      * Sets the animalID code
+     *
      * @param animalID the animalID code
      */
 
     public void setAnimalID(Integer animalID) {
         this.animalID = animalID;
     }
+
     /**
      * Gets the sum code
-     * @return <code> BigDecimal </code> 
-     * specifying the sum code
+     *
+     * @return <code> BigDecimal </code> specifying the sum code
      */
 
     public BigDecimal getSum() {
         return sum;
     }
+
     /**
      * Sets the sum code
-     * @param sum  the sum code
+     *
+     * @param sum the sum code
      */
 
     public void setSum(BigDecimal sum) {
         this.sum = sum;
     }
+
     /**
      * Gets the time code
-     * @return <code> LocalDateTime </code>
-     * specifying the time code
+     *
+     * @return <code> LocalDateTime </code> specifying the time code
      */
 
     public LocalDateTime getTime() {
         return time;
     }
+
     /**
      * Sets the time code
+     *
      * @param time the time code
      */
 
     public void setTime(LocalDateTime time) {
         this.time = time;
     }
+
     /**
-     * Этот метод предназначен для определения примерного расположения объекта в хэш-таблице с целью увелечения скорости поиска объекта
+     * Этот метод предназначен для определения примерного расположения объекта в
+     * хэш-таблице с целью увелечения скорости поиска объекта
+     *
      * @return <code> int </code>
      */
 
@@ -148,9 +179,11 @@ public class Order {
         hash = 67 * hash + Objects.hashCode(this.time);
         return hash;
     }
+
     /**
-     * Этот метод предназначен для сравнения двух объектов 
-     * @param obj - объект 
+     * Этот метод предназначен для сравнения двух объектов
+     *
+     * @param obj - объект
      * @return  <code> boolean </code>
      */
 
@@ -180,17 +213,17 @@ public class Order {
         }
         return Objects.equals(this.sum, other.sum);
     }
+
     /**
      * Переводит в формат строки
+     *
      * @return <code> String</code>
-     * 
+     *
      */
 
     @Override
     public String toString() {
         return "Order{" + "idOrder=" + idOrder + ", userID=" + userID + ", animalID=" + animalID + ", sum=" + sum + ", time=" + time + '}';
     }
-    
-    
-    
+
 }

@@ -2,14 +2,22 @@
 package com.itrail.test.domain;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+
 /**
  * @author barysevich_k
+ * @param <T>
  */
+@ApiModel(description = "Предназначен для отображения запросов")
 public class BaseResponse<T> {
+    @ApiModelProperty(value = "Код сообщения", name = "Сode", dataType = "Integer", example = "999")
     private int code = 999;
+    @ApiModelProperty(value = "Сообщение", name = "Message", dataType = "String", example = "System mallfunction")
     private String message = "System mallfunction";
     
-    
+    @ApiModelProperty(value = "Ответ на запрос", name = "Data")
     @JsonInclude(Include.NON_NULL)
     private T data;
 

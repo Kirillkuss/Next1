@@ -1,6 +1,7 @@
-    
 package com.itrail.test.domain;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -12,32 +13,51 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 /**
  *
  * @author barysevich_k
  */
+@ApiModel(description = "Информация о питомце")
 @Entity
 @Table(name = "ANIMALREST")
 public class Animal {
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name  =  "ANIMAL_ID")  private Integer    idAnimal;
-        @Column(name = "type_animal")  private String     type;
-        @Column(name = "coat_animal")  private BigDecimal coat;
-        @Column(name = "count_animal") private Integer    count;
-        @OneToOne(cascade = CascadeType.ALL)
-        @JoinColumn(name = "USER_ID")  private User       owner;
-        public Animal() {
-        }             
 
-        public Animal(Integer idAnimal,String type, BigDecimal coat,Integer count){
-            this.idAnimal = idAnimal;
-            this.type = type;
-            this.coat = coat;
-            this.count = count;
-        }
-        
+    @ApiModelProperty(value = "Ид питомца ", name = "idAnimal", dataType = "Integer", example = "1",required = true)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ANIMAL_ID")
+    private Integer idAnimal;
+    
+    @ApiModelProperty(value = "Тип питомца ", name = "Type", dataType = "String",required = true)
+    @Column(name = "type_animal")
+    @Size(min = 1, max = 20)
+    private String type;
+    
+    @ApiModelProperty(value = "Цена питомца ", name = "Coat", dataType = "String", example = "1", required = true)
+    @Column(name = "coat_animal")
+    private BigDecimal coat;
+    
+    @ApiModelProperty(value = "Количество питомцев ", name = "Count", dataType = "Integer", example = "1", required = true)
+    @Column(name = "count_animal")
+    private Integer count;
+    
+    @ApiModelProperty(value = "Хозяин питомца ", name = "Owner",example = "null",required = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "USER_ID")
+    private User owner;
+
+    public Animal() {
+    }
+
+    public Animal(Integer idAnimal, String type, BigDecimal coat, Integer count) {
+        this.idAnimal = idAnimal;
+        this.type = type;
+        this.coat = coat;
+        this.count = count;
+    }
+
     public Integer getIdAnimal() {
         return idAnimal;
     }
@@ -69,7 +89,7 @@ public class Animal {
     public void setCount(Integer count) {
         this.count = count;
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -106,9 +126,7 @@ public class Animal {
 
     @Override
     public String toString() {
-        return "Animal{" + "idAnimal=" + idAnimal + ", type=" + type + ", coat=" + coat +  '}';
+        return "Animal{" + "idAnimal=" + idAnimal + ", type=" + type + ", coat=" + coat + '}';
     }
-    
-    
-        
+
 }

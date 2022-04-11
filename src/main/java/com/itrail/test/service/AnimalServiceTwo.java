@@ -48,6 +48,6 @@ public class AnimalServiceTwo {
     }
     
     public List<Animal> withoutOwner(){
-        return entitymanager.createQuery("SELECT e FROM Animal e WHERE e.owner = null").getResultList();
+        return entitymanager.createQuery("SELECT e FROM Animal e WHERE e.owner = null and e.count <> 0 ").getResultList();
     }     
 }

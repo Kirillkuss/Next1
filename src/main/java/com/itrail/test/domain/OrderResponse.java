@@ -1,11 +1,15 @@
 
 package com.itrail.test.domain;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.util.List;
 /**
  * @author barysevich_k
  */
+@ApiModel(description = "Ответ по заказам")
 public class OrderResponse {
+    @ApiModelProperty(value = " Список заказов ", name = "Orders")
     private List<Order> orders;
 
     public OrderResponse() {

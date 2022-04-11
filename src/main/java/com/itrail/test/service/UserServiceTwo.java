@@ -14,6 +14,7 @@ import javax.transaction.Transactional;
  *
  * @author barysevich_k
  */
+
 @Stateless
 public class UserServiceTwo {
     @PersistenceContext

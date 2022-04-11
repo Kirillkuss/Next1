@@ -32,7 +32,7 @@ public class ApplicationTest  {
                 new User(11, "Robert", "rrrrr@ty.ru", "+37529894545", new BigDecimal("5000.34")),
                 new User(12, "Misha", "mmmm@ven.by", "+3751224892", new BigDecimal("20000.45") ),
                 new User(13,"Andrei","aaaaa@list.com", "+37533783434",new BigDecimal("900.54")));  
-        service2.createAnimal(new Animal(1,"cat",new BigDecimal("600.23"),5),
+        service2.createAnimal(new Animal(1,"cat",new BigDecimal("600.23"),2),
                               new Animal(5,"dog",new BigDecimal("400.21"),1),
                               new Animal(20,"bird",new BigDecimal("400.256"),34),
                               new Animal(24,"turtle",new BigDecimal("800.46"),5),

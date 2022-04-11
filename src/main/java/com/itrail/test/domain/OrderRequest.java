@@ -3,6 +3,8 @@ package com.itrail.test.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.itrail.test.serializer.LocalDateTimeDeserializer;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -14,13 +16,20 @@ import javax.persistence.Table;
  *
  * @author barysevich_k
  */
+@ApiModel(description = "Поиск заказа по параметрам")
 @Entity
 @Table(name = "ORDERRQ")
 public class OrderRequest {
+    
+    @ApiModelProperty(value = "Ид заказе", name = "idOrderRq", dataType = "Integer",example = "1")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idOrderRq;
+    
+    @ApiModelProperty(value = "Ид пользователя", name = "idUser", dataType = "Integer", example = "1")
     private Integer idUser;
+    
+    @ApiModelProperty(value = "Время и Дата заказа", name = "time",dataType = "String", example = "08.04.2022 10:15:46")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class) 
     private LocalDateTime time;
 

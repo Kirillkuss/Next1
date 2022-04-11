@@ -1,5 +1,7 @@
 package com.itrail.test.domain;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
@@ -17,46 +19,65 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+
 /**
  *
  * @author barysevich_k
  */
+@ApiModel(description = "Информация о пользователе")
 @Entity
 @Table(name = "USERREST")
 public class User {
+    @ApiModelProperty(value = " Ид пользователя ", name = "idUser", dataType = "Integer", example = "1",required = true)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_ID")                  private Integer      idUser;
+    @Column(name = "USER_ID")
+    private Integer idUser;
+    
+    @ApiModelProperty(value = " Имя пользователя ",name = "Name", dataType = "String" ,required = true )
     @NotEmpty(message = "Name User not be Empty")
-    @Column(name = "name_user")                private String       name;
-    @Email (message = "Login has invalid format: ${validatedValue}",
+    @Column(name = "name_user")
+    @Size(min = 1, max = 20)
+    private String name;
+    
+    @ApiModelProperty(value ="Логин пользователя ",name = "Login", dataType = "String", required = false)
+    @Email(message = "Login has invalid format: ${validatedValue}",
             regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$")
-    @Column(name = "login_user")               private String       login;
-    @Size (min =9, max = 13)
-    @Column(name = "phone_user")               private String       phone;
-    @Column(name = "wallet_user", length = 12) private BigDecimal   wallet;
-    @ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER )
+    @Column(name = "login_user")
+    private String login;
+    
+    @ApiModelProperty(value ="Номер телефона",name = "Phone", dataType = "String",required = false)
+    @Size(min = 9, max = 13)
+    @Column(name = "phone_user")
+    private String phone;
+    
+    @ApiModelProperty(value ="Кошелек пользователя ",name = "Wallet", dataType = "String",required = true)
+    @Column(name = "wallet_user", length = 12)
+    private BigDecimal wallet;
+    
+    @ApiModelProperty(value ="Питомцы пользователя ",name = "Pets",required = false)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "USER_ANIMAL", joinColumns = @JoinColumn(name = "USER_ID"),
-    inverseJoinColumns = @JoinColumn(name = "ANIMAL_ID"))
-                                               private List<Animal> animal;
-    
-    public User(){
-        
+            inverseJoinColumns = @JoinColumn(name = "ANIMAL_ID"))
+    private List<Animal> animal;
+
+    public User() {
+
     }
-    
-    public User(Integer idUser, @NotEmpty String name, String login, String phone, BigDecimal wallet){
+
+    public User(Integer idUser, @NotEmpty String name, String login, String phone, BigDecimal wallet) {
         this.idUser = idUser;
-        this.name   = name;
-        this.login  = login;
-        this.phone  = phone;
+        this.name = name;
+        this.login = login;
+        this.phone = phone;
         this.wallet = wallet;
     }
 
     public User(Integer idUser, String name, String login, String phone, BigDecimal wallet, List<Animal> animal) {
         this.idUser = idUser;
-        this.name   = name;
-        this.login  = login;
-        this.phone  = phone;
+        this.name = name;
+        this.login = login;
+        this.phone = phone;
         this.wallet = wallet;
         this.animal = animal;
     }
@@ -151,12 +172,9 @@ public class User {
         return Objects.equals(this.animal, other.animal);
     }
 
-   
-
     @Override
     public String toString() {
         return "User{" + "idUser=" + idUser + ", name=" + name + ", login=" + login + ", phone=" + phone + ", wallet=" + wallet + ", animal=" + animal + '}';
     }
-    
 
 }
