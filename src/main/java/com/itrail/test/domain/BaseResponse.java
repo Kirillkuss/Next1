@@ -12,12 +12,12 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @ApiModel(description = "Предназначен для отображения запросов")
 public class BaseResponse<T> {
-    @ApiModelProperty(value = "Код сообщения", name = "Сode", dataType = "Integer", example = "999")
+    @ApiModelProperty(value = "Код сообщения", name = "code", dataType = "Integer", example = "999")
     private int code = 999;
-    @ApiModelProperty(value = "Сообщение", name = "Message", dataType = "String", example = "System mallfunction")
+    @ApiModelProperty(value = "Сообщение", name = "message", dataType = "String", example = "System mallfunction")
     private String message = "System mallfunction";
     
-    @ApiModelProperty(value = "Ответ на запрос", name = "Data")
+    @ApiModelProperty(value = "Ответ на запрос", name = "data", dataType = "String")
     @JsonInclude(Include.NON_NULL)
     private T data;
 

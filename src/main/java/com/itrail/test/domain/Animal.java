@@ -19,33 +19,54 @@ import javax.validation.constraints.Size;
  *
  * @author barysevich_k
  */
-@ApiModel(description = "Информация о питомце")
+
 @Entity
 @Table(name = "ANIMALREST")
+@ApiModel(description = "Информация о питомце")
 public class Animal {
-
-    @ApiModelProperty(value = "Ид питомца ", name = "idAnimal", dataType = "Integer", example = "1",required = true)
+ 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ANIMAL_ID")
+    @ApiModelProperty(value    = "Ид питомца ",
+                      name     = "idAnimal",
+                      dataType = "Integer",
+                      example  = "1",
+                      required = true)
     private Integer idAnimal;
     
-    @ApiModelProperty(value = "Тип питомца ", name = "Type", dataType = "String",required = true)
-    @Column(name = "type_animal")
-    @Size(min = 1, max = 20)
+    @Column(name = "type_animal")   @Size(min = 1, max = 20)        
+    @ApiModelProperty(value    = "Тип питомца ",
+                      name     = "type",
+                      dataType = "String",
+                      example  = "dog",
+                      required = true)
     private String type;
     
-    @ApiModelProperty(value = "Цена питомца ", name = "Coat", dataType = "String", example = "1", required = true)
     @Column(name = "coat_animal")
+    @ApiModelProperty(value    = "Цена питомца ",
+                      name     = "coat",
+                      dataType = "String",
+                      example  = "800.3",
+                      required = true)
     private BigDecimal coat;
     
-    @ApiModelProperty(value = "Количество питомцев ", name = "Count", dataType = "Integer", example = "1", required = true)
+    
     @Column(name = "count_animal")
+    @ApiModelProperty(value    = "Количество питомцев ",
+                      name     = "count",
+                      dataType = "Integer",
+                      example  = "1",
+                      required = true)
     private Integer count;
     
-    @ApiModelProperty(value = "Хозяин питомца ", name = "Owner",example = "null",required = false)
+    
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "USER_ID")
+    @ApiModelProperty(value    = "Хозяин питомца ",
+                      name     = "owner",
+                      example  = "null",
+                      required = false)
     private User owner;
 
     public Animal() {
@@ -112,12 +133,8 @@ public class Animal {
             return false;
         }
         final Animal other = (Animal) obj;
-        if (!Objects.equals(this.type, other.type)) {
-            return false;
-        }
-        if (!Objects.equals(this.idAnimal, other.idAnimal)) {
-            return false;
-        }
+        if (!Objects.equals(this.type, other.type)) return false;
+        if (!Objects.equals(this.idAnimal, other.idAnimal)) return false;
         if (!Objects.equals(this.coat, other.coat)) {
             return false;
         }

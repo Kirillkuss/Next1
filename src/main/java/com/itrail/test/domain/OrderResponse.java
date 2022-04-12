@@ -9,7 +9,7 @@ import java.util.List;
  */
 @ApiModel(description = "Ответ по заказам")
 public class OrderResponse {
-    @ApiModelProperty(value = " Список заказов ", name = "Orders")
+    @ApiModelProperty(value = " Список заказов ", name = "orders")
     private List<Order> orders;
 
     public OrderResponse() {

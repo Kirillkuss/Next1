@@ -1,6 +1,7 @@
 
 package com.itrail.test.rest.impl;
 
+import com.google.errorprone.annotations.RestrictedApi;
 import com.itrai.test.exception.ItException;
 import com.itrail.test.domain.BaseResponse;
 import com.itrail.test.domain.Order;
@@ -16,6 +17,7 @@ import javax.ws.rs.Path;
  *API for BuyService
  * @author barysevich_k
  */
+
 @Path("em")
 public class BuyAPI implements BuyResource {
         @EJB private BuyService service;
@@ -31,17 +33,18 @@ public class BuyAPI implements BuyResource {
     }
 
     @Override
-    public BaseResponse getBuyAnimal(Integer idAnimal, Integer idUser) throws ItException {
+    public BaseResponse getBuyAnimal(Integer idAnimal, Integer idUser, String key) throws ItException {        
         BaseResponse bs = new BaseResponse(200, "success");
+        key = "1";
         service.getBuyAnimal(idAnimal, idUser);
-        bs.setData("IDAnimal = " + idAnimal +  " IDUser = " + idUser + " TimeOrder: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss")));
+        bs.setData("Animal = " + idAnimal +  " User = " + idUser + " TimeOrder: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss")));   
         return bs;
     }
     
     @Override
     public Order getOrder(OrderRequest req) throws ItException {
         BaseResponse<Order> bs = service.getOrder(req);  
-        if(bs.getCode() != 0) throw new ItException(bs.getCode(), bs.getMessage()); 
+        if(bs.getCode() != 0) throw new ItException(bs.getCode(), bs.getMessage());
         return service.getOrder(req).getData();
     }
 

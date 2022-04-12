@@ -5,6 +5,8 @@ import com.itrail.test.domain.User;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,8 +19,17 @@ import javax.transaction.Transactional;
 
 @Stateless
 public class UserServiceTwo {
+    
     @PersistenceContext
     private EntityManager entityManager;
+    
+    @PostConstruct
+    protected void init(){ 
+    }
+ 
+    @PreDestroy
+    protected void destroy(){   
+    }
     
     public User getUs(Integer idUser){
         return entityManager.find(User.class, idUser);

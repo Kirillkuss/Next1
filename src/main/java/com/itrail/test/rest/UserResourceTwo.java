@@ -22,9 +22,9 @@ import javax.ws.rs.core.MediaType;
  *
  * @author barysevich_k
  */
-@Api(value = "UserTwo", tags = {"User"})
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@Api(value = "UserTwo", tags = {"User"})
 public interface UserResourceTwo {
 
     @GET
@@ -39,31 +39,33 @@ public interface UserResourceTwo {
     @Path("/{idUser}")
     @ApiOperation(value = "Поиск пользовтеля по ИД")
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = " One User"),
-        @ApiResponse(code = 500, message = "Not Found User",response = BaseResponse.class)
+        @ApiResponse(code = 200, message = "Пользователь найден"),
+        @ApiResponse(code = 500, message = "пользователь не найден",response = BaseResponse.class)
     })
     public BaseResponse getUserByID(@ApiParam(required = true) @PathParam("idUser") Integer idUser);
 
     @PUT
+    @Path("/create")
     @ApiOperation(value = "Добавление пользователя")
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = " Add User")})
-    @Path("/create")
+        @ApiResponse(code = 200, message = " Пользователь добавлен",response = User.class),
+        @ApiResponse(code = 500, message = " Пользователь не добавлен",response = BaseResponse.class)})
     public BaseResponse createUser(@ApiParam(required = true) User user);
 
     @POST
+    @Path("/{idUser}/{name}")
     @ApiOperation(value = "Изменения имени пользователя")
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = " Rename User")})
-    @Path("/{idUser}/{name}")
+        @ApiResponse(code = 200, message = "Rename User"),
+        @ApiResponse(code = 500, message = "Not Rename User",response = BaseResponse.class)})
     public BaseResponse updateUser(@ApiParam(required = true) @PathParam("idUser") Integer idUser, @ApiParam(required = true) @PathParam("name") String name);
 
     @DELETE
+    @Path("/{idUser}")
     @ApiOperation(value = "Удаление пользователя")
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = "Delete User"),
-        @ApiResponse(code = 500, message = "Not Found User",response = BaseResponse.class)})
-    @Path("/{idUser}")
+        @ApiResponse(code = 200, message = "Пользователь удален"),
+        @ApiResponse(code = 500, message = "Пользователь не удален",response = BaseResponse.class)})
     public BaseResponse deleteUserUM(@ApiParam(required = true) @PathParam("idUser") Integer idUser);
 
 }

@@ -2,16 +2,22 @@ package com.itrail.test.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.itrail.test.serializer.LocalDateTimeSerializer;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDateTime;
 
 /**
  *
  * @author barysevich_k
  */
+@ApiModel(description = "Предназначен для отображения времени на сервере")
 public class ServerTime {
 
+    @ApiModelProperty(value = "Код", name = "code")
     private int code = 0;
-    @JsonSerialize( using = LocalDateTimeSerializer.class)
+    
+    @ApiModelProperty(value = " Время и дата на серевере ", name = "time")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime time;
 
     public ServerTime() {

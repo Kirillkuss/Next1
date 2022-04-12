@@ -12,6 +12,8 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,6 +28,14 @@ import javax.transaction.Transactional;
 public class BuyService {
     @PersistenceContext
     private EntityManager em; 
+    
+    @PostConstruct
+    protected void init(){ 
+    }
+ 
+    @PreDestroy
+    protected void destroy(){   
+    }
     
     /**
      * Этот метод для получения списка всех заказов за сегодняшний день в промежутке врмени с 00:00 по настоящее время.
@@ -55,7 +65,7 @@ public class BuyService {
      */
     
     public BaseResponse<List<Order>> getOrders(OrderRequest rq){
-        BaseResponse<List<Order>> bs = new BaseResponse<>(200,"success");
+        BaseResponse<List<Order>> bs = new BaseResponse<>(0,"success");
         try{
             bs.setData(getOrdrs());
             return bs;
@@ -80,7 +90,7 @@ public class BuyService {
         try{
             Order order = getOrdrs().stream().findFirst().orElse(null);
             r.setData(order);
-            return r; 
+            return r;
         } catch(Exception ex){    
             ex.printStackTrace(System.err);
             return BaseResponse.error(905, ex);   

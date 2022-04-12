@@ -13,33 +13,53 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
 /**
  * Доменный класс для описания сущности заказ
  *
  * @author barysevich_k
  */
-@ApiModel(description = "Информация о заказе")
 @Entity
 @Table(name = "ORDEREST")
+@ApiModel(description = "Информация о заказе")
 public class Order {
-
-    @ApiModelProperty(value = "Ид заказa", name = "IdOrder", dataType = "Integer", example = "1", required = true)
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idOrder; //not null
+    @ApiModelProperty(value    = "Ид заказa", 
+                      name     = "IdOrder", 
+                      dataType = "Integer", 
+                      example  = "1", 
+                      required = true)
+    private Integer idOrder;
     
-    @ApiModelProperty(value = "Ид покупателя", name = "UserID", dataType = "Integer", required = true)
+    @ApiModelProperty(value    = "Ид покупателя",
+                      name     = "userID",
+                      dataType = "Integer",
+                      example  = "1",
+                      required = true)
     private Integer userID;
     
-    @ApiModelProperty(value = "Ид питомца", name = "AnimalID", dataType = "Integer", required = true)
+    @ApiModelProperty(value    = "Ид питомца",
+                      name     = "animalID",
+                      dataType = "Integer",
+                      example  = "1",
+                      required = true)
     private Integer animalID;
     
-    @ApiModelProperty(value = "Стоипость покупки", name = "Sum", dataType = "String", required = true)
+    @ApiModelProperty(value    = "Стоипость покупки",
+                      name     = "sum",
+                      dataType = "String",
+                      example  = "400.2",
+                      required = true)
     private BigDecimal sum;
     
-    @ApiModelProperty(value = "Время покупки", name = "Date and Time", example = "1", required = true)
+    
     @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @ApiModelProperty(value    = "Время покупки",
+                      name     = "time",
+                      dataType = "String",
+                      example  = "12.04.2022 11:02:42",
+                      required = true)
     private LocalDateTime time;
 
     public Order() {

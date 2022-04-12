@@ -4,6 +4,8 @@ package com.itrail.test.service;
 import com.itrail.test.domain.Animal;
 import java.util.Arrays;
 import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,6 +20,14 @@ public class AnimalServiceTwo {
     
     @PersistenceContext
     private EntityManager entitymanager;
+    
+    @PostConstruct
+    protected void init(){ 
+    }
+ 
+    @PreDestroy
+    protected void destroy(){   
+    }
     
     public Animal getAnimalById(Integer idAnimal){
         return entitymanager.find(Animal.class, idAnimal);

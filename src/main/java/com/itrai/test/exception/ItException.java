@@ -1,6 +1,5 @@
 
 package com.itrai.test.exception;
-
 /**
  *
  * @author barysevich_k
