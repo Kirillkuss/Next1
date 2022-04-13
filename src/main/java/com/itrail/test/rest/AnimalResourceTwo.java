@@ -14,6 +14,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+
+
 /**
  *
  * @author barysevich_k
@@ -25,9 +27,10 @@ import javax.ws.rs.core.MediaType;
 public interface AnimalResourceTwo {
 
     @GET
+     
     @ApiOperation(value = "Список животных")
-    @ApiResponses(value = {
-        @ApiResponse(code = 200, message = " List Animal",response = Animal.class)})
+    @ApiResponses( value = {
+        @ApiResponse( code = 200, message = " List Animal",response = Animal.class)})
     public BaseResponse getAnimalByList();
 
     @GET

@@ -7,11 +7,17 @@ import com.itrail.test.domain.BaseResponse;
 import com.itrail.test.domain.Order;
 import com.itrail.test.domain.OrderRequest;
 import com.itrail.test.domain.User;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.zip.GZIPOutputStream;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.Stateless;
@@ -166,6 +172,22 @@ public class BuyService {
         orders.stream().forEach(s->em.merge(s));
         em.merge(us);   
     }
+    
+    
+        public void ma() throws IOException{
+        System.out.println("GZIP FILE>>>>>>>>>>>>>>>>" );
+        RandomAccessFile f = new RandomAccessFile("primer", "rw");
+        f.setLength(1024 * 1024 * 10);
+        Path fileToCompress = Paths.get("primer");
+        Path outputFile = Paths.get("primer.gz");
+        compressGZip(fileToCompress, outputFile);
+    }
+    public void compressGZip(Path fileToCompress, Path outputFile) throws IOException {
+    try (GZIPOutputStream gzipOutputStream = new GZIPOutputStream(Files.newOutputStream(outputFile))) {
+        byte[] allBytes = Files.readAllBytes(fileToCompress);
+        gzipOutputStream.write(allBytes);}
+  }
+   
 
 }
 

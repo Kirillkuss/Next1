@@ -13,42 +13,44 @@ import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.Authorization;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.HEAD;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.HeaderParam;
-
+//import org.jboss.resteasy.annotations.GZIP;
 /**
  *
  * @author barysevich_k
  */
-
-
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Api(value = "BuyAnimals", tags = {"Buy"})
 public interface BuyResource {
 
     @GET
+    
     @ApiOperation(value = "Поиск заказов с 00:00 по настоящее время сегодняшего дня")
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Список заказов",        response = Order.class),
         @ApiResponse(code = 500, message = "Списка заказов нет",    response = BaseResponse.class)})
     public BaseResponse getListOrder();
-
+    
     @POST
     @Path("/{animal}/{user}")
-    @ApiOperation(value = "Покупка питомца", authorizations = @Authorization(value = "token"))
+   // @GZIP
+    @ApiOperation(value = "Покупка питомца", authorizations = @Authorization(value = "token"),notes = "Откройте страницу и совершите покупку")
     @ApiResponses(value = {
-        @ApiResponse(code = 200, message = " Покупка завершена",    response = Order.class),
-        @ApiResponse(code = 500, message = "Покупка не состоялась", response = BaseResponse.class)})
+        @ApiResponse(code = 50, message = "Недостаточно денег"),
+        @ApiResponse(code = 51, message = "Нет животных в магазине"),
+        @ApiResponse(code = 200, message = "Покупка завершена", response = Order.class),
+        @ApiResponse(code = 401, message = "Значение ключа не может быть равным нулю или пустым, повторите попытку!"),
+        @ApiResponse(code = 403, message = "Неверный ключ, повторите попытку!")})
     public BaseResponse getBuyAnimal(
         @ApiParam(required = true, value = "Ид питомца")           @PathParam("animal") Integer idAnimal,
         @ApiParam(required = true, value = "Ид пользователя")      @PathParam("user") Integer idUser,
-        @ApiParam(value = "ключ", required = true, example = " ")  @HeaderParam("X-API-KEY") String key
+        @ApiParam(value = "ключ", example = " ")  @HeaderParam("X-API-KEY") String key
     ) throws ItException;
 
     @POST

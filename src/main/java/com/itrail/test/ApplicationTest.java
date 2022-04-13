@@ -5,7 +5,13 @@ import com.itrail.test.domain.User;
 import com.itrail.test.service.AnimalServiceTwo;
 import com.itrail.test.service.BuyService;
 import com.itrail.test.service.UserServiceTwo;
+import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.zip.GZIPOutputStream;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
@@ -37,11 +43,8 @@ public class ApplicationTest  {
                               new Animal(20,"bird",new BigDecimal("400.256"),34),
                               new Animal(24,"turtle",new BigDecimal("800.46"),5),
                               new Animal(40,"snake",new BigDecimal("300.87"),5));
-        serv.createOrder();
-
+        serv.createOrder();  
     }
-    
-
     
     @PreDestroy
     public void destroy(){

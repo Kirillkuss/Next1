@@ -28,7 +28,6 @@ public class AnimalServiceTwo {
     @PreDestroy
     protected void destroy(){   
     }
-    
     public Animal getAnimalById(Integer idAnimal){
         return entitymanager.find(Animal.class, idAnimal);
     }

@@ -1,6 +1,7 @@
 package com.itrail.test.app;
 
 import io.swagger.jaxrs.config.BeanConfig;
+
 import java.util.HashSet;
 import java.util.Set;
 import javax.servlet.ServletConfig;
